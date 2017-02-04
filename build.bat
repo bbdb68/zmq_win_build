@@ -26,5 +26,18 @@ cd "build_dir\czmq"
 %cmake% -G "Visual Studio 14 2015 Win64"  ..\..\..\czmq -DLIBZMQ_INCLUDE_DIRS=%LIBZMQ_INCLUDE_DIRS% -DLIBZMQ_LIBRARIES=%LIBZMQ_LIBRARIES%
 msbuild czmq.sln /p:Configuration=Release
 
+cd ..\..
+
+: zyre
+: -----------
+set CZMQ_INCLUDE_DIRS=%CURRENTDIR%\..\czmq\include
+set CZMQ_LIBRARIES=%CURRENTDIR%\build_dir\czmq\Release\czmq.lib
+
+mkdir "build_dir\zyre"
+cd "build_dir\zyre"
+%cmake% -G "Visual Studio 14 2015 Win64"  ..\..\..\zyre -DLIBZMQ_INCLUDE_DIRS=%LIBZMQ_INCLUDE_DIRS% -DLIBZMQ_LIBRARIES=%LIBZMQ_LIBRARIES% -DCZMQ_INCLUDE_DIRS=%CZMQ_INCLUDE_DIRS% -DCZMQ_LIBRARIES=%CZMQ_LIBRARIES%
+msbuild zyre.sln /p:Configuration=Release
+
+cd ..\..
 
 pause -1
