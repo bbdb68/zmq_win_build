@@ -23,6 +23,7 @@ cd ..\..
 
 set LIBZMQ_INCLUDE_DIRS=%CURRENTDIR%\..\libzmq\include
 set LIBZMQ_LIBRARIES=%CURRENTDIR%\build_dir\zmq\lib\%CONFIGURATION%\libzmq-v140-mt-4_2_2.lib
+set LIBZMQ_DLL=%CURRENTDIR%\build_dir\zmq\bin\%CONFIGURATION%\libzmq-v140-mt-4_2_2.dll
 
 : -------------
 :   CZMQ
@@ -35,10 +36,13 @@ cd "build_dir\czmq"
 
 msbuild czmq.sln /p:Configuration=%CONFIGURATION%
 
+copy %LIBZMQ_DLL% .\%CONFIGURATION%
+
 cd ..\..
 
 set CZMQ_INCLUDE_DIRS=%CURRENTDIR%\..\czmq\include
 set CZMQ_LIBRARIES=%CURRENTDIR%\build_dir\czmq\%CONFIGURATION%\czmq.lib
+set CZMQ_DLL=%CURRENTDIR%\build_dir\czmq\%CONFIGURATION%\czmq.dll
 
 : -----------
 :   zyre
@@ -51,6 +55,8 @@ cd "build_dir\zyre"
   -DCZMQ_INCLUDE_DIRS=%CZMQ_INCLUDE_DIRS% -DCZMQ_LIBRARIES=%CZMQ_LIBRARIES%
 
 msbuild zyre.sln /p:Configuration=%CONFIGURATION%
+copy %LIBZMQ_DLL% .\%CONFIGURATION%
+copy %CZMQ_DLL% .\%CONFIGURATION%
 
 cd ..\..
 
