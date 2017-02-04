@@ -15,8 +15,8 @@ call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 :   ZeroMQ
 : -------------
 
-mkdir "build_dir\zmq"
-cd "build_dir\zmq"
+mkdir "build_dir_uwp\zmq"
+cd "build_dir_uwp\zmq"
 %cmake% -G %GENERATOR% -DZMQ_BUILD_TESTS=OFF  -DZMQ_USE_TWEETNACL=OFF -DENABLE_CURVE=OFF ..\..\..\libzmq
 msbuild ZeroMQ.sln /p:Configuration=%CONFIGURATION% /p:Platform=Win32 /t:libzmq
 : .\bin\%CONFIGURATION%\inproc_lat.exe 100 100
@@ -33,8 +33,8 @@ exit
 :   CZMQ
 : --------------
 
-mkdir "build_dir\czmq"
-cd "build_dir\czmq"
+mkdir "build_dir_uwp\czmq"
+cd "build_dir_uwp\czmq"
 %cmake% -G %GENERATOR% ..\..\..\czmq ^
   -DLIBZMQ_INCLUDE_DIRS=%LIBZMQ_INCLUDE_DIRS% -DLIBZMQ_LIBRARIES=%LIBZMQ_LIBRARIES%
 
@@ -53,8 +53,8 @@ set CZMQ_DLL=%CURRENTDIR%\build_dir\czmq\%CONFIGURATION%\czmq.dll
 :   zyre
 : -----------
 
-mkdir "build_dir\zyre"
-cd "build_dir\zyre"
+mkdir "build_dir_uwp\zyre"
+cd "build_dir_uwp\zyre"
 %cmake% -G %GENERATOR%   ..\..\..\zyre ^
   -DLIBZMQ_INCLUDE_DIRS=%LIBZMQ_INCLUDE_DIRS% -DLIBZMQ_LIBRARIES=%LIBZMQ_LIBRARIES% ^
   -DCZMQ_INCLUDE_DIRS=%CZMQ_INCLUDE_DIRS% -DCZMQ_LIBRARIES=%CZMQ_LIBRARIES%
