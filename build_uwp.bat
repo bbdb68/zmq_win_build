@@ -9,7 +9,7 @@ SET CONFIGURATION=Release
 SET GENERATOR="Visual Studio 14 2015" -DCMAKE_SYSTEM_NAME=WindowsStore -DCMAKE_SYSTEM_VERSION=10.0
 
 : setup visual studio 2015
-call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 
 : -------------
 :   ZeroMQ
@@ -24,10 +24,9 @@ msbuild ZeroMQ.sln /p:Configuration=%CONFIGURATION% /p:Platform=Win32 /t:libzmq
 cd ..\..
 
 set LIBZMQ_INCLUDE_DIRS=%CURRENTDIR%\..\libzmq\include
-set LIBZMQ_LIBRARIES=%CURRENTDIR%\build_dir\zmq\lib\%CONFIGURATION%\libzmq-v140-mt-4_2_2.lib
-set LIBZMQ_DLL=%CURRENTDIR%\build_dir\zmq\bin\%CONFIGURATION%\libzmq-v140-mt-4_2_2.dll
+set LIBZMQ_LIBRARIES=%CURRENTDIR%\build_dir_uwp\zmq\lib\%CONFIGURATION%\libzmq-v140-mt-4_2_2.lib
+set LIBZMQ_DLL=%CURRENTDIR%\build_dir_uwp\zmq\bin\%CONFIGURATION%\libzmq-v140-mt-4_2_2.dll
 
-exit
 
 : -------------
 :   CZMQ
@@ -45,8 +44,8 @@ copy %LIBZMQ_DLL% .\%CONFIGURATION%
 cd ..\..
 
 set CZMQ_INCLUDE_DIRS=%CURRENTDIR%\..\czmq\include
-set CZMQ_LIBRARIES=%CURRENTDIR%\build_dir\czmq\%CONFIGURATION%\czmq.lib
-set CZMQ_DLL=%CURRENTDIR%\build_dir\czmq\%CONFIGURATION%\czmq.dll
+set CZMQ_LIBRARIES=%CURRENTDIR%\build_dir_uwp\czmq\%CONFIGURATION%\czmq.lib
+set CZMQ_DLL=%CURRENTDIR%\build_dir_uwp\czmq\%CONFIGURATION%\czmq.dll
 
 
 : -----------
@@ -59,7 +58,7 @@ cd "build_dir_uwp\zyre"
   -DLIBZMQ_INCLUDE_DIRS=%LIBZMQ_INCLUDE_DIRS% -DLIBZMQ_LIBRARIES=%LIBZMQ_LIBRARIES% ^
   -DCZMQ_INCLUDE_DIRS=%CZMQ_INCLUDE_DIRS% -DCZMQ_LIBRARIES=%CZMQ_LIBRARIES%
 
-msbuild zyre.sln /p:Configuration=%CONFIGURATION%
+msbuild zyre.sln /p:Configuration=%CONFIGURATION% /p:Platform=Win32
 copy %LIBZMQ_DLL% .\%CONFIGURATION%
 copy %CZMQ_DLL% .\%CONFIGURATION%
 
